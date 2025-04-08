@@ -15,7 +15,7 @@ export default function NoTeam() {
         const response = await store(data);
 
         setOpenModal(false);
-        window.location.href = "/teams";
+        window.location.href = "/app/teams";
 
     }
 
