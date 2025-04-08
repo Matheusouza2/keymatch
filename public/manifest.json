@@ -1,0 +1,58 @@
+{
+    "name": "Keymatch",
+    "short_name": "KM",
+    "start_url": "https://keymatch.sertsoft.com.br/",
+    "display": "standalone",
+    "description": "Uma aplicação para gerenciamento de partidas de campeonato",
+    "lang": " pt_BR",
+    "dir": "auto",
+    "theme_color": "#000000",
+    "background_color": "#000000",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "https://keymatch.sertsoft.com.br/assets/images/icon.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "https://keymatch.sertsoft.com.br/assets/images/icon.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "https://www.pwabuilder.com/assets/screenshots/screen1.png",
+            "sizes": "2880x1800",
+            "type": "image/png",
+            "description": "A screenshot of the home page"
+        }
+    ],
+    "related_applications": [
+        {
+            "platform": "windows",
+            "url": "https://keymatch.sertsoft.com.br/"
+        }
+    ],
+    "prefer_related_applications": false,
+    "shortcuts": [
+        {
+            "name": "Meu time",
+            "url": "https://keymatch.sertsoft.com.br/app/teams",
+            "description": "Seu time"
+        },
+        {
+            "name": "Competição",
+            "url": "https://keymatch.sertsoft.com.br/app/competition",
+            "description": "Tabela da competição"
+        },
+        {
+            "name": "Rodadas",
+            "url": "https://keymatch.sertsoft.com.br/app/match",
+            "description": "Ver as rodadas"
+        }
+    ]
+}
