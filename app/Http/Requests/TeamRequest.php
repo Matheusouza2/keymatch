@@ -23,7 +23,7 @@ class TeamRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|length:3,50|unique:teams,name',
         ];
     }
 
