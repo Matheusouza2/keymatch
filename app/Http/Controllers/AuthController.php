@@ -69,7 +69,7 @@ class AuthController extends Controller
      */
     public function store(UserRequest $request)
     {
-        if (!str_contains(request('email'), '@univasf.edu.br')) {
+        if (!str_contains(request('email'), '@univasf.edu.br') && !str_contains(request('email'), '@discente.univasf.edu.br')) {
             return $this::jsonResponse('O email deve ser institucional', 422, 'email');
         }
         $user = User::create([
