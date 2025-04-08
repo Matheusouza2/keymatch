@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        <link rel="manifest" href="public/manifest.json" />
+
+            <script>
+                navigator.serviceWorker.register("public/pwabuilder-adv-sw.js")
+            </script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
