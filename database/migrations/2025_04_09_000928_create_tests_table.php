@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tests', function (Blueprint $table) {
+        Schema::create('tests', function (Blueprint $table) {
             $table->string('file')->nullable();
             $table->foreignId('match_game_id')->constrained('match_games')->onDelete('cascade');
             $table->boolean('team1_release')->default(false);
@@ -24,9 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tests', function (Blueprint $table) {
-            $table->dropForeign(['match_game_id']);
-            $table->dropIfExists('tests');
-        });
+        Schema::dropIfExists('tests');
     }
 };
