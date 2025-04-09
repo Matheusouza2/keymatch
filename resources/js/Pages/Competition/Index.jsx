@@ -47,7 +47,7 @@ export default function Index({ table, title }) {
                 </div>
             </div>
 
-            <div className='bg-white rounded-2xl mx-1 shadow-2xl mb-16'>
+            <div className='bg-white rounded-2xl mx-1 shadow-2xl mb-16 overflow-x-auto'>
                 <Table>
                     <TableHead>
                         <TableRow>
