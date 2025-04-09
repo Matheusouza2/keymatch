@@ -46,6 +46,10 @@ class TeamController extends Controller
             'owner' => Auth::user()->id,
         ]);
 
+        $request->merge(['team_id' => $team->id]);
+
+        app(CompetitionController::class)->store($request);
+
         return response()->json($team, 201);
     }
 
