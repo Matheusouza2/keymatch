@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('match_game_id')->constrained('match_games')->onDelete('cascade');
             $table->boolean('team1_release')->default(false);
             $table->boolean('team2_release')->default(false);
+            $table->timestamps();
         });
     }
 
