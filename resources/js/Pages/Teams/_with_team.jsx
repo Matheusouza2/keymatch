@@ -6,7 +6,7 @@ import { useForm } from "@inertiajs/react";
 import { consultarUsuarios } from "@Services/UserService";
 import { addMember, uploadImage } from "@Services/TeamService";
 
-export default function WithTeam({ team, members }) {
+export default function WithTeam({ team, members, auth }) {
 
     const { data, setData, errors, setError, clearError } = useForm({ user_id: "" });
     const [modalOpen, setModalOpen] = useState(false);
@@ -56,9 +56,11 @@ export default function WithTeam({ team, members }) {
                 <div className="flex justify-between w-full">
                     <h2 className="text-2xl font-bold text-gray-800">Membros</h2>
 
-                    <Button onClick={() => setModalOpen(true)}>
-                        <HiPlus className="me-2" />Adicionar membros
-                    </Button>
+                    {
+                        auth.id == team.owner && (<Button onClick={() => setModalOpen(true)}>
+                            <HiPlus className="me-2" />Adicionar membros
+                        </Button>)
+                    }
 
                 </div>
                 <div className="flex items-center justify-between w-full p-4 border-b">
