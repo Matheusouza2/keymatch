@@ -2,7 +2,7 @@ import Template from '@Layouts/Template';
 import NoTeam from './_no_team';
 import WithTeam from './_with_team';
 
-export default function Index({ team, members, auth }) {
+export default function Index({ team, members }) {
 
 
     return (
@@ -23,7 +23,7 @@ export default function Index({ team, members, auth }) {
 
             {
                 team ?
-                    <WithTeam team={team} members={members} auth={auth} /> :
+                    <WithTeam team={team} members={members} /> :
                     <NoTeam />
             }
 

@@ -16,11 +16,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $team = Team::join('team_components as tc', 'teams.id', 'tc.team_id')
-            ->where('owner', Auth::user()->id)
-            ->orWhere('tc.user_id', Auth::user()->id)
-            ->with('user')
-            ->first();
+        $team = Team::where('owner', Auth::user()->id)->with('user')->first();
 
         $members = TeamComponents::where('team_id', $team?->id)
             ->join('users', 'team_components.user_id', 'users.id')
@@ -29,7 +25,6 @@ class TeamController extends Controller
         return Inertia::render('Teams/Index', [
             'team' => $team,
             'members' => $members,
-            'auth' => Auth::user()
         ]);
     }
 
