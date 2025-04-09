@@ -39,5 +39,6 @@ Route::prefix('app')->middleware('auth')->group(function () {
      */
     Route::prefix('match')->group(function () {
         Route::get('', [MatchGameController::class, 'index']);
+        Route::get('/{matchGame}', [MatchGameController::class, 'show'])->name('match.show');
     });
 });

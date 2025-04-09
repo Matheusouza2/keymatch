@@ -15,6 +15,9 @@ class CompetitionController extends Controller
     {
         $table = Competition::with('team')
             ->orderByDesc('points')
+            ->orderByDesc('wins')
+            ->orderByDesc('draws')
+            ->orderBy('losses')
             ->get();
 
         return Inertia::render('Competition/Index', [
@@ -73,19 +76,21 @@ class CompetitionController extends Controller
         $competition1 = Competition::where('team_id', $team1)->first();
         $competition2 = Competition::where('team_id', $team2)->first();
 
-        if ($match->team1_score > $match->team2_score) {
-            $competition1->points = 3;
-            $competition1->wins = 1;
-            $competition2->losses = 1;
-        } elseif ($match->team1_score < $match->team2_score) {
-            $competition2->points = 3;
-            $competition2->wins = 1;
-            $competition1->losses = 1;
+        if ($request->winner != null) {
+            if ($request->winner->id == $team1) {
+                $competition1->points += 3;
+                $competition1->wins += 1;
+                $competition2->losses += 1;
+            } else {
+                $competition2->points += 3;
+                $competition2->wins += 1;
+                $competition1->losses += 1;
+            }
         } else {
-            $competition1->points = 1;
-            $competition2->points = 1;
-            $competition1->draws = 1;
-            $competition2->draws = 1;
+            $competition1->points += 1;
+            $competition2->points += 1;
+            $competition1->draws += 1;
+            $competition2->draws += 1;
         }
 
         $competition1->save();

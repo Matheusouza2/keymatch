@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PlacarAtualizado;
 use App\Models\MatchGame;
 use App\Models\Team;
+use App\Models\TeamComponents;
+use App\Models\Test;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 
 class MatchGameController extends Controller
@@ -52,7 +56,16 @@ class MatchGameController extends Controller
      */
     public function show(MatchGame $matchGame)
     {
-        //
+        $matchGame->load('team1', 'team2');
+        $tests = Test::where('match_game_id', $matchGame->id)->get();
+        $teamAuth = Team::join('team_components as tc', 'tc.team_id', 'teams.id')->where('owner', Auth::user()->id)->orWhere('tc.user_id', Auth::user()->id)->first();
+
+        return Inertia::render('Match/Show', [
+            'title' => 'Partida',
+            'match' => $matchGame,
+            'teamAuth' => $teamAuth,
+            'tests' => $tests,
+        ]);
     }
 
     /**
@@ -75,9 +88,8 @@ class MatchGameController extends Controller
         $matchGame->team2_score = $team2Score;
 
         $matchGame->save();
-        $request->merge(['match' => $matchGame]);
 
-        app(CompetitionController::class)->update($request);
+        //broadcast(new PlacarAtualizado($matchGame));
 
         return $this::jsonResponse("Placar atualizado com sucesso!", 200);
     }
@@ -128,20 +140,46 @@ class MatchGameController extends Controller
             $teams = array_merge([$teams[0]], $temp);
         }
 
+
         foreach ($rounds as $key => $value) {
+
+            $files = File::files(public_path('assets/testes'));
+            $three = array_slice($files, 0, 3);
+
             for ($i = 0; $i < count($value); $i++) {
                 if (($value[$i][0]['id'] == 0 || $value[$i][1]['id'] == 0)) {
                     continue;
                 }
 
-                MatchGame::create([
+                $match = MatchGame::create([
                     'round' => $key + 1,
                     'team1_id' => $value[$i][0]['id'],
                     'team2_id' => $value[$i][1]['id'],
                 ]);
+
+                for ($j = 0; $j < count($three); $j++) {
+                    Test::create([
+                        'file' => '/assets/testes/' . $three[$j]->getFilename(),
+                        'match_game_id' => $match->id,
+                        'team1_release' => false,
+                        'team2_release' => false,
+                    ]);
+                }
             }
         }
 
         return $this::jsonResponse('Rodadas geradas com sucesso!', 200);
+    }
+
+    public function endMatch(Request $request, MatchGame $matchGame)
+    {
+        $winner = $matchGame->getWinnerAttribute();
+
+        $request->merge(['winner' => $winner]);
+        $request->merge(['match' => $matchGame]);
+
+        app(CompetitionController::class)->update($request);
+
+        return $this::jsonResponse('Partida finalizada com sucesso!', 200);
     }
 }

@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import Template from '@Layouts/Template';
+import { Card } from 'flowbite-react';
 import { useState } from 'react';
 
 export default function Index({ matches, title }) {
@@ -66,7 +67,7 @@ export default function Index({ matches, title }) {
                     <div key={round}>
                         <h2 className="text-xl font-bold">{round}ª rodada</h2>
                         {matches.map((match) => (
-                            <div key={match.id} className="bg-white shadow-md rounded-lg p-4 mb-4">
+                            <Card href={`/app/match/${match.id}`} key={match.id} className="bg-white shadow-md rounded-lg p-4 mb-4">
                                 <div className='flex justify-between items-center'>
                                     <div>
                                         <img src={match.team1.image} className='rounded-full w-20 h-20' alt="" />
@@ -85,7 +86,7 @@ export default function Index({ matches, title }) {
                                     </div>
                                 </div>
                                 <p>{match.time}</p>
-                            </div>
+                            </Card>
 
                         ))}
                     </div>

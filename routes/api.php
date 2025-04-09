@@ -23,5 +23,6 @@ Route::prefix('users')->group(function () {
 
 Route::prefix('matches')->group(function () {
     Route::post('{matchGame}', [MatchGameController::class, 'update']);
+    Route::post('{matchGame}/end', [MatchGameController::class, 'endMatch']);
     Route::get('generateRounds', [MatchGameController::class, 'generateRounds'])->name('generateRounds');
 });

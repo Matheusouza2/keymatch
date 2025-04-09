@@ -42,9 +42,14 @@ export default function Index({ matches, title }) {
             : { [selectedRound]: rounds[selectedRound] };
 
     const saveScore = (matchId) => {
-        console.log(data);
         setScore(data, matchId);
     };
+
+    const endMacth = (matchId) => {
+        api.post(`matches/${matchId}/end`).then(() => {
+            window.location.reload();
+        });
+    }
 
     const handleRounds = () => {
         api.get('matches/generateRounds').then(() => {
@@ -124,8 +129,9 @@ export default function Index({ matches, title }) {
                                         <span>{match.team2.name}</span>
                                     </div>
                                 </div>
-                                <div>
+                                <div className='flex justify-between gap-4'>
                                     <Button className='w-full' color="green" onClick={() => saveScore(match.id)}>Salvar</Button>
+                                    <Button className='w-full' color="red" onClick={() => endMacth(match.id)}>Encerrar partida</Button>
                                 </div>
                             </div>
 
